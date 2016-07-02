@@ -1,0 +1,70 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf460
+{\fonttbl\f0\fswiss\fcharset0 CenturyGothic;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue255;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid1\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid2\'02\'01.;}{\levelnumbers\'01;}\fi-360\li1440\lin1440 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid101\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid102\'02\'01.;}{\levelnumbers\'01;}\fi-360\li1440\lin1440 }{\listname ;}\listid2}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\ri720\sb100\partightenfactor0
+
+\f0\b\fs20 \cf0 Install JAVA
+\b0 \
+Setup JDK 1.8\
+If you have any other version please uninstall it first and delete the symlinks in \
+C:\\ProgramData\\Oracle\\Java\\javapath\
+Download JDK 1.8 from \
+\pard\pardeftab720\ri720\sb100\partightenfactor0
+{\field{\*\fldinst{HYPERLINK "http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html"}}{\fldrslt \cf2 \ul \ulc2 http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html}}\
+Install JDK to C:\\Java\\jdk1.8.0_45\\ (avoid paths with spaces, this thing was not originally meant for Windows, so it doesn\'92t like spaces in paths), install JRE to C:\\Java\\jre1.8.0_45\
+Add a new System Variable JAVA_HOME with value: C:\\Java\\jdk1.8.0_45\
+Add %JAVA_HOME%\\bin to your PATH \
+\pard\pardeftab720\ri720\sb100\partightenfactor0
+
+\b \cf0 \
+Install MAVEN
+\b0 \
+Download Maven 3.3.3 binary from\
+\pard\pardeftab720\ri720\sb100\partightenfactor0
+{\field{\*\fldinst{HYPERLINK "http://download.nextag.com/apache/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.zip"}}{\fldrslt \cf2 \ul \ulc2 http://download.nextag.com/apache/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.zip}}\
+unzip to C:\\apache-maven-3.3.3\
+Add two new System Variables MAVEN_HOME and M2_HOME with value: C:\\apache-maven-3.3.3\
+Add %M2_HOME%\\bin to path\
+\pard\pardeftab720\ri720\sb100\partightenfactor0
+
+\b \cf0 \
+Install PYTHON
+\b0 \
+Download and install Python 2.7.10 from {\field{\*\fldinst{HYPERLINK "https://www.python.org/downloads/"}}{\fldrslt \cf2 \ul \ulc2 https://www.python.org/downloads/}}\
+Add to path: C:\\Python27;C:\\Python27\\Lib\\site-packages;C:\\Python27\\Scripts;\
+Add .PY to PATHTEXT\
+==============\
+Install IDE (IntelliJ IDEA of Eclipse)\
+\pard\pardeftab720\ri720\sl276\slmult1\sb100\sa200\partightenfactor0
+\cf0 \
+\pard\pardeftab720\li450\fi-432\ri720\sl276\slmult1\sb100\partightenfactor0
+\ls1\ilvl1\cf0 \kerning1\expnd3\expndtw15
+1.1.	Running\
+\pard\pardeftab720\ri720\sl276\slmult1\sb100\sa200\partightenfactor0
+\cf0 \kerning1\expnd3\expndtw15
+In local mode, the program can be run from the command line (root folder of Gladiator) by invoking the following - \
+\pard\pardeftab720\ri720\sl276\slmult1\sb100\sa200\partightenfactor0
+
+\b\fs24 \cf0 \kerning1\expnd3\expndtw15
+mvn clean compile exec:java -Dexec.classpathScope=compile -Dexec.mainClass=org.gladiator.topology.TrendTopology\
+\pard\pardeftab720\ri720\sl276\slmult1\sb100\sa200\partightenfactor0
+
+\fs20 \cf0 \kerning1\expnd3\expndtw15
+\
+\pard\pardeftab720\li450\fi-432\ri720\sl276\slmult1\sb100\partightenfactor0
+\ls2\ilvl1
+\b0 \cf0 \kerning1\expnd3\expndtw15
+1.2.	Usage\
+\pard\pardeftab720\ri720\sl276\slmult1\sb100\sa200\partightenfactor0
+\cf0 \kerning1\expnd3\expndtw15
+Start Python SimpleHTTPServer in the web folder of this code repo:\
+\pard\pardeftab720\ri720\sb100\partightenfactor0
+
+\b\fs24 \cf0 \kerning1\expnd3\expndtw15
+python -m SimpleHTTPServer\
+}

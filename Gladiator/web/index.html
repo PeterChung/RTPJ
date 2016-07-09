@@ -375,6 +375,7 @@
     function newDataReceived(newData) {
         var jsonData = JSON.parse(newData);
         var id = stateCodeAndIdMap[jsonData["stateCode"]];
+        console.log(id);
         // Peter Added
         var sport = jsonData["keyword"];
         var maxArray ={};
@@ -459,6 +460,7 @@
 
             analyzedCount++;
             tweetText = jsonData["tweetText"];
+            //console.log("here!")
             setAnalyzedCount();
             setTweet();
         }

@@ -49,7 +49,7 @@ public final class TrendTopology {
             final TopologyOutput topologyOutput = new TopologyOutput(input.getInteger(0), input.getString(1), input.getString(2), input.getString(3));
             Gson gson = new Gson();
             String topologyOutputJson = gson.toJson(topologyOutput);
-            LOGGER.info("{}", topologyOutputJson);
+            //LOGGER.info("{}", topologyOutputJson);
             return session.createTextMessage(topologyOutputJson);
         });
 

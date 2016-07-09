@@ -24,7 +24,7 @@ import org.springframework.context.ApplicationContext;
 /**
  * Topology to organize spouts and bolts for gladiator
  *
- * @author - Udacity, Abdullah Moyeen
+
  * @modifiedBy - Peter Chung
  *             -- apply new topology
  *             -- apply new output format

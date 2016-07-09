@@ -823,7 +823,7 @@ public class CountBolt extends BaseRichBolt
         count = countMapWY.get(keyword);
       break;
       default:
-      break;
+        return;
 
     }
     // emit count, keyword, tweettest, and location

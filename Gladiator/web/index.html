@@ -295,12 +295,13 @@
 
     $(function () {
         $("#sportList").change(function () {
-            stop();
-            elapsed = 0;
+            //stop();
+            //elapsed = 0;
             keyword = this.value;
-            analyzedCount = 0;
-            tweetText = "<mark>none</mark>";
+            //analyzedCount = 0;
+            //tweetText = "<mark>none</mark>";
             //Peter added
+            /*
             for (var i in baseballCnt) {
                 if (baseballCnt.hasOwnProperty(i)) {
                     baseballCnt[i] = 0;
@@ -331,7 +332,7 @@
                     olympicCnt[i] = 0;
                 }
             }
-
+            */
             // Peter added end
             /*
             for (var i in sumById) {
@@ -351,10 +352,10 @@
             }
             */
 
-            setElapsed();
+            //setElapsed();
             setSport();
-            setAnalyzedCount();
-            setTweet();
+            //setAnalyzedCount();
+            //setTweet();
             redraw();
         })
     });
@@ -375,6 +376,7 @@
     function newDataReceived(newData) {
         var jsonData = JSON.parse(newData);
         var id = stateCodeAndIdMap[jsonData["stateCode"]];
+        //console.log(id);
         // Peter Added
         var sport = jsonData["keyword"];
         var maxArray ={};
@@ -459,6 +461,7 @@
 
             analyzedCount++;
             tweetText = jsonData["tweetText"];
+            //console.log("here!")
             setAnalyzedCount();
             setTweet();
         }

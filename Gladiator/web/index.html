@@ -81,6 +81,24 @@
         .states {
             fill: #e5e5e5;
         }
+        
+        /* CSS for bar chart*/
+          .chart {
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+  }
+
+  .axis path, .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+
+  .bar {
+    fill: steelblue;
+  }
+  
+  /*CSS for bar char ends*/
 
     </style>
 
@@ -104,12 +122,12 @@
     <table style="margin: auto;">
         <tr>
             <td align="center">
-                <img src="assets/img/ExampleGraph.png" alt="Graph" style="width:150px;">
+                <div id='barGraph'></div>
             </td>
         </tr>
         <tr><!-- Peter modified -->
             <td style="color: #367bb6; font-family: Berlin Sans FB Demi; font-size: x-large; text-align: center;">
-                Break-Down Graph
+                Bar Chart- Trend day wise
             </td>
         </tr>
         <tr><!-- Peter modified -->
@@ -179,7 +197,7 @@
     <!--table style="margin: 10px 10px 10px 50px;"-->
     <table style="margin: auto;">
         <tr><!-- Peter modified -->
-            <td><u>Real-Time Tweet</u></td>
+            <td><u>RT Twitter Text</u></td>
         </tr>
         <tr>
             <td id="tweet">
@@ -198,7 +216,9 @@
     if (!window.WebSocket) {
         alert("WebSocket not supported by this browser");
     }
-
+    var barChartData;
+    var newdata;
+	var data;
     var intervalms = 1000;
     //var sumById = {};
     //var countById = {};
@@ -373,7 +393,10 @@
 
     // Peter Modified
     function newDataReceived(newData) {
-        var jsonData = JSON.parse(newData);
+    	var mapData = newData.split('::')[0];
+    	barChartData = newData.split('::')[1];
+    	//alert("Data for Bar chart : "+ barChartData);
+        var jsonData = JSON.parse(mapData);
         var id = stateCodeAndIdMap[jsonData["stateCode"]];
         // Peter Added
         var sport = jsonData["keyword"];
@@ -462,6 +485,8 @@
             setAnalyzedCount();
             setTweet();
         }
+        
+        drawBarchart();
     }
 
     var socket = {
@@ -617,6 +642,85 @@
     $(function () {
         setInterval(redrawAtInterval, intervalms);
     });
+    
+    function drawBarchart(){
+    	
+    	var datas = JSON.parse(barChartData);
+    	
+    	//alert("KEY = "+ keyword);
+    	
+    	//alert("Original data : "+ JSON.stringify(datas))
+    	
+    	var mk = Object.keys(datas)[0];
+    	//alert("what is the key = "+ mk);
+    	
+    	var datab = datas[mk];
+    	//data = newdata;
+    	
+    	//alert("Old data = "+ data);
+    	
+    	if(keyword == mk){
+    		//data = JSON.stringify(datab);
+    		//alert("data for key"+ keyword +" is = "+JSON.stringify(datab));
+    		//newdata = data;
+    		data = datab;
+    	}
+    	
+    	//data = [{"date":"2012-03-20","total":"3"},{"date":"2012-03-21","total":"8"}];
+    	
+    	//alert("Data Is = "+ JSON.stringify(data));
+    	
+    	var margin = {top: 40, right: 40, bottom: 40, left:40},
+        width = 500,
+        height = 350;
+
+    var x = d3.time.scale()
+        .domain([new Date(data[0].date), d3.time.day.offset(new Date(data[data.length - 1].date), -1)])
+        .rangeRound([0, width - margin.left - margin.right]);
+
+    var y = d3.scale.linear()
+        .domain([0, d3.max(data, function(d) { return parseInt(d.total);})])
+        .range([height - margin.top - margin.bottom, 0]);
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient('bottom')
+        .ticks(d3.time.days, 1)
+        .tickFormat(d3.time.format('%a %d'))
+        .tickSize(0)
+        .tickPadding(1);
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient('left')
+        .tickPadding(8);
+
+    d3.select("#barGraph").select("svg").remove();
+    var svg = d3.select("#barGraph").append('svg')
+        .attr('class', 'chart')
+        .attr('width', width)
+        .attr('height', height)
+      .append('g')
+        .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')');
+
+    svg.selectAll('.chart')
+        .data(data)
+      .enter().append('rect')
+        .attr('class', 'bar')
+        .attr('x', function(d) { return x(new Date(d.date)); })
+        .attr('y', function(d) { return height - margin.top - margin.bottom - (height - margin.top - margin.bottom - y(parseInt(d.total))) })
+        .attr('width', 25)
+        .attr('height', function(d) { return height - margin.top - margin.bottom - y(parseInt(d.total)) });
+
+    svg.append('g')
+        .attr('class', 'x axis')
+        .attr('transform', 'translate(0, ' + (height - margin.top - margin.bottom) + ')')
+        .call(xAxis);
+
+    svg.append('g')
+      .attr('class', 'y axis')
+      .call(yAxis);
+    }
 
 </script>
 </body>

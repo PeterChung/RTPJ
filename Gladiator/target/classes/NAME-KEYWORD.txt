@@ -15,7 +15,7 @@ uefa	Soccer
 olympic	Olympic
 olympics	Olympic
 rio2016	Olympic
-swimming	Olympic
+olympic	Olympic
 afl	Football
 football	Football
 collegefootball	Football

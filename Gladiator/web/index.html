@@ -20,7 +20,7 @@
 		<script src="assets/js/d3.v3.min.js"></script>
 		<script src="assets/js/topojson.v1.min.js"></script>
 		<script src="assets/js/bootstrap.min.js"></script>
-        
+
 		 <style>
         .chart div {
             font: 15px Helvetica;
@@ -87,7 +87,7 @@
     </style>
     </head>
     <body lang="en">
-	
+
         <div id="branding"></div>
 		<div id="powered-by">
                 <span>powered by</span>
@@ -97,7 +97,7 @@
             </div>
         <div id="timeline">
 				<g class="totals"><circle class="point" r="3" fill="#41F7C7" cx="8" cy="82"></circle>
-				
+
 				<circle class="point" r="3" fill="#848484" cx="1188" cy="23"></circle>
 				<path class="totals" fill="none" stroke="#999" stroke-width="1.5" d="M8,82L11.286908077994429,
 				81.807471169317L14.573816155988858,81.59725483082158L17.860724233983284,81.40263061593781L21.147632311977716,
@@ -148,14 +148,16 @@
 		</g>
 		<g class="label" transform="translate(1188.5,23.30892536873783)">
 		<circle r="5" fill="#41F7C7"></circle>
-		<text class="displayCount"  fill="#41F7C7" style="font-size: 30px;text-align: right;">Total Tweets : 0</text>
+		<!--text class="displayCount"  fill="#41F7C7" style="font-size: 30px;text-align: right;">Total Tweets : 0</text> -->
+    <text id="displayCount"  fill="#41F7C7" style="font-size: 30px;text-align: right;">Total Tweets : 0</text>
 		</g>
 		</svg>
 		</div>
-		<div style="vertical-align: middle;text-align: center;">
-		<a class="name" href="#buzz" style="font-size: 20px; color: "#E92E82";"><span>Pick Your Sport</span></a>
-		<select id="sportList" name="sportList" style="width: 250px; height: 40px;  text-align: left;" >
-                    <option value="none">Select</option>
+
+		<div style="vertical-align: middle;text-align: center; color: black;">
+		<a class="name" href="#buzz" style="font-size: 20px; color: "#E92E82";"><span>Pick Your Tweet View</span></a>
+		<select id="sportList" name="sportList" style="width: 250px; height: 40px; text-align: left; " >
+                    <option value="none">All</option>
                     <option value="Tennis" style="color: red;">Tennis</option>
                     <option value="Baseball" style="color: red;">Baseball</option>
                     <option value="Basketball" style="color: blue;">Basketball</option>
@@ -164,50 +166,65 @@
                     <option value="Football" style="color: red;">Football</option>
                 </select>
 				<button value="Start" id="start" class="btn btn-primary btn-large"
-                        style="font-size: 18px; font-family: Helvetica; text-shadow: 0.025em 0.025em 0.025em rgba(0, 0, 0, 0.8); 
+                        style="font-size: 18px; font-family: Helvetica; text-shadow: 0.025em 0.025em 0.025em rgba(0, 0, 0, 0.8);
 						color:#000000">
                     <span class="glyphicon glyphicon-play"></span> Start
                 </button>
                 <button value="Stop" id="stop" class="btn btn-warning btn-large"
-                        style="font-size: 18px; font-family: Helvetica; text-shadow: 0.025em 0.025em 0.025em rgba(0, 0, 0, 0.8); 
+                        style="font-size: 18px; font-family: Helvetica; text-shadow: 0.025em 0.025em 0.025em rgba(0, 0, 0, 0.8);
 						color:#000000">
                     <span class="glyphicon glyphicon-stop"></span> Stop
                 </button>
 		</div>
+        <div style="font-family: Helvetica; color: white; font-size: large; text-align: left; height: 100px; padding-top: 5%;">
+        <table style="margin: 10px 10px 10px 50px;">
+        <!--table style="margin: auto;"-->
+            <tr><!-- Peter modified -->
+                <td><u>Real-Time Tweet</u></td>
+            </tr>
+            <tr>
+                <td id="tweet">
+                    <mark>none</mark>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- test -->
+
         <div id="view">
-		
+
 		<div id="chart" style="float: left; padding-top: 5%;"></div>
 	 	<div class="list" style="width: 460px;">
 		<ul><li class="item" style="font-size: 60px; margin-left: 0px;">
-		
-		<span class="label" id="tennis" style="padding-left: 7px;">
+
+		<span class="label" id="tennis" style="padding-left: 7px; color: Chartreuse;">
 		<a class="name" href="">TENNIS</a>
-		<span class="count1" style="font-size: 60px;">1,932</span></span></li>
+    <span id="countTennis" style="font-size: 60px;">0</span></span></li>
 		<li class="item" style="font-size: 60px;">
-		
-		<span class="label" id="baseball" style="padding-left: 9px;">
+
+		<span class="label" id="baseball" style="padding-left: 9px; color: PaleGreen;">
 		<a class="name" href="">BASEBALL</a>
-		<span class="count2" style="font-size: 60px;">946</span></span></li>
+    <span id="countBase" style="font-size: 60px;">0</span></span></li>
 		<li class="item" style="font-size: 60px;">
-		
-		<span class="label" id="basketball" style="padding-left: 9px;">
+
+		<span class="label" id="basketball" style="padding-left: 9px; color: LightCoral;">
 		<a class="name" href="">BASKETBALL</a>
-		<span class="count3" style="font-size: 60px;">826</span></span></li>
+    <span id="countBasket" style="font-size: 60px;">0</span></span></li>
 		<li class="item" style="font-size: 60px;">
-		
-		<span class="label" id="olympics" style="padding-left: 9px;">
+
+		<span class="label" id="olympics" style="padding-left: 9px; color: red;">
 		<a class="name" href="">OLYMPICS</a>
-		<span class="count4" style="font-size: 60px;">713</span></span></li>
+    <span id="countOlmp" style="font-size: 60px;">0</span></span></li>
 		<li class="item" style="font-size: 60px;">
-		
-		<span class="label" id="soccer" style="padding-left: 9px;">
+
+		<span class="label" id="soccer" style="padding-left: 9px; color: green;">
 		<a class="name" href="">SOCCER</a>
-		<span class="count5" style="font-size: 60px;">341</span></span></li>
+    <span id="countSoccer" style="font-size: 60px;">0</span></span></li>
 		<li class="item" style="font-size: 60px;">
-		
-		<span class="label" id="football" style="padding-left: 9px;">
+
+		<span class="label" id="football" style="padding-left: 9px; color: pink;">
 		<a class="name" href="">FOOTBALL</a>
-		<span class="count6" style="font-size: 60px;">325</span></span></li>
+    <span id="countFoot" style="font-size: 60px;">0</span></span></li>
 		<li class="filler" style="display: none;"><span class="label"></span></li>
 		</ul>
 		</div>
@@ -217,10 +234,12 @@
         alert("WebSocket not supported by this browser");
     }
     var intervalms = 1000;
-    //var sumById = {};
-    //var countById = {};
-    //var populateById = {};
-    // Peter added
+    var baseballTWCnt =0;
+    var tennisTWCnt =0;
+    var basketballTWCnt =0;
+    var soccerTWCnt =0;
+    var footballTWCnt =0;
+    var olympicTWCnt =0;
     var baseballCnt = {};
     var baseIdx =1;
     var tennisCnt = {};
@@ -241,7 +260,7 @@
     var stateCodeAndIdMap = {};
     var isStarted = false;
     var singleDraw = true;
-    var labels_for_legend = ["-50", "0", "50"];
+    //var labels_for_legend = ["-50", "0", "50"];
     var ext_color_domain = [-50, 0, 50];
     //var color = d3.scale.linear().domain(ext_color_domain).range(["#ff0000", "#ffffff", "#00ff00"]).interpolate(d3.interpolateRgb);
     var color = d3.scale.linear().domain(ext_color_domain).range(["#ff0000", "#ffffff", "#00ff00"]).interpolate(d3.interpolateRgb);
@@ -276,10 +295,11 @@
         n = n + '';
         return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
     }
-    var keyword = "none";
-    function setSport() {
-        $("#Sport").html(keyword == "none" ? "All Tweets" : "Selected Sport : " + keyword);
-    }
+    //var keyword = "none";
+    //function setSport() {
+    //    $("#Sport").html(keyword == "none" ? "All Tweets" : "Selected Sport : " + keyword);
+    //}
+
     var elapsed = 0;
     function setElapsed() {
         var days = Math.floor(elapsed / 86400);
@@ -291,11 +311,19 @@
     var analyzedCount = 0;
     function setAnalyzedCount() {
         $("#displayCount").html("Total Tweets : " + analyzedCount);
+        $("#countBase").html(baseballTWCnt);
+        $("#countTennis").html(tennisTWCnt);
+        $("#countBasket").html(basketballTWCnt);
+        $("#countSoccer").html(soccerTWCnt);
+        $("#countOlmp").html(olympicTWCnt);
+        $("#countFoot").html(footballTWCnt);
     }
     var tweetText = "<mark>none</mark>";
     function setTweet() {
         $("#tweet").html(tweetText);
     }
+
+    var keyword = "none";
     $(function () {
         $("#sportList").change(function () {
             //stop();
@@ -355,7 +383,7 @@
             }
             */
             //setElapsed();
-            setSport();
+            //setSport();
             //setAnalyzedCount();
             //setTweet();
             redraw();
@@ -372,6 +400,7 @@
             window.location = "stats.html";
         });
     });
+
     // Peter Modified
     function newDataReceived(newData) {
         var jsonData = JSON.parse(newData);
@@ -383,26 +412,32 @@
         var currnetCnt = jsonData["count"];
         var max = 0;
         var maxIndex=0;
-        //console.log(currnetCnt);
+        //console.log(sport);
         // map the count value to sport
         if(sport =="Baseball") {
           //console.log(sport);
           baseballCnt[id] = currnetCnt;
+          baseballTWCnt += 1;
         }else if (sport == "Tennis") {
           //console.log(sport);
           tennisCnt[id] = currnetCnt;
+          tennisTWCnt +=1;
         }else if (sport== "Basketball") {
           //console.log(sport);
           basketballCnt[id] = currnetCnt;
+          basketballTWCnt +=1;
         }else if (sport =="Soccer") {
           //console.log(sport);
           soccerCnt[id] = currnetCnt;
-        }else if (sport = "Olympic"){
+          soccerTWCnt +=1;
+        }else if (sport == "Olympic"){
           //console.log(sport);
           olympicCnt[id] = currnetCnt;
-        }else if (sport = "Football"){
+          olympicTWCnt +=1;
+        }else if (sport == "Football"){
           //console.log(sport);
           footballCnt[id] = currnetCnt;
+          footballTWCnt +=1;
         }
         // get max index
         maxArray[baseIdx] = baseballCnt[id];
@@ -428,17 +463,17 @@
           }
         }
         maxidx[id] = maxIndex;
-		 $("#count1").html(maxArray[baseIdx]);
-		  $("#count2").html(maxArray[tennIdx]);
-		   $("#count3").html(maxArray[basketIdx]);
-		    $("#count4").html(maxArray[soccerCnt]);
-			 $("#count5").html(maxArray[olymIdx]);
-			  $("#count6").html(maxArray[footbIdx]);
+		 //$("#count1").html(baseballTWCnt);
+		 //$("#count2").html(tennisTWCnt);
+		 //$("#count3").html(basketballTWCnt);
+		 //$("#count4").html(soccerTWCnt);
+		 //$("#count5").html(olympicTWCnt);
+		 //$("#count6").html(footballTWCnt);
         //console.log(maxIndex);
         //console.log(id);
-        //analyzedCount++;
+        analyzedCount++;
         //tweetText = jsonData["tweetText"];
-        //setAnalyzedCount();
+        setAnalyzedCount();
         //setTweet();
         // Peter Added end
         if (keyword == "none") {
@@ -447,9 +482,9 @@
             //if (sumById[id] != 0 && countById[id] > 0) {
             //    populateById[id] = sumById[id] / countById[id];
             //}
-            analyzedCount++;
+            //analyzedCount++;
             tweetText = jsonData["tweetText"];
-            setAnalyzedCount();
+            //setAnalyzedCount();
             setTweet();
         }
         else if (keyword == jsonData["keyword"]) {
@@ -458,10 +493,10 @@
             //if (sumById[id] != 0 && countById[id] > 0) {
             //    populateById[id] = sumById[id] / countById[id];
             //}
-            analyzedCount++;
+            //analyzedCount++;
             tweetText = jsonData["tweetText"];
             //console.log("here!")
-            setAnalyzedCount();
+            //setAnalyzedCount();
             setTweet();
         }
     }
@@ -497,7 +532,7 @@
             var countries = topojson.feature(topology, topology.objects.states).features;
             svg.selectAll(".country").remove();
             svg.selectAll("text").remove();
-            svg.selectAll("g.legend").remove();
+            //svg.selectAll("g.legend").remove();
             g.selectAll(".sentimentry").data(countries).enter().append("path")
                     .attr("class", "land-boundary").attr("d", path).style("fill", function (d) {
                         //var value = populateById[d.id];
@@ -564,22 +599,22 @@
             g.append("path").datum(topojson.mesh(topology, topology.objects.states, function (a, b) {
                 return a !== b;
             })).attr("class", "state-boundary").attr("d", path);
-            var legend = svg.selectAll("g.legend").data(ext_color_domain)
-                    .enter().append("g").attr("class", "legend");
-            var ls_w = 20, ls_h = 20;
-            legend.append("rect").attr("x", 35).attr("y", function (d, i) {
-                return height - (i * ls_h) - 3.5 * ls_h;
-            }).attr("width", ls_w).attr("height", ls_h).style("fill",
-                    function (d, i) {
-                        return color(d);
-                    }).style("opacity", 0.8);
-            legend.append("text").attr("x", 65).attr("y", function (d, i) {
-                return height - (i * ls_h) - ls_h - 35;
-            }).style("fill", function (d) {
-                return "white";
-            }).text(function (d, i) {
-                return labels_for_legend[i];
-            });
+            //var legend = svg.selectAll("g.legend").data(ext_color_domain)
+            //        .enter().append("g").attr("class", "legend");
+            //var ls_w = 20, ls_h = 20;
+            //legend.append("rect").attr("x", 35).attr("y", function (d, i) {
+            //    return height - (i * ls_h) - 3.5 * ls_h;
+            //}).attr("width", ls_w).attr("height", ls_h).style("fill",
+            //        function (d, i) {
+            //            return color(d);
+            //        }).style("opacity", 0.8);
+            //legend.append("text").attr("x", 65).attr("y", function (d, i) {
+            //    return height - (i * ls_h) - ls_h - 35;
+            //}).style("fill", function (d) {
+            //    return "white";
+            //}).text(function (d, i) {
+            //    return labels_for_legend[i];
+            //});
         });
     }
     function redrawAtInterval() {

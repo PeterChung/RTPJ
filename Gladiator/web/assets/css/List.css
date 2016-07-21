@@ -1,0 +1,97 @@
+div.list {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+}
+
+div.list ul {
+	list-style-type: none;
+    display: block;
+	margin: 0;
+	padding: 0;
+    overflow-x: hide;
+}
+
+div.list li {
+	display: block;
+	background-image: url(../../assets/images/000.png);
+	background-repeat: no-repeat;
+	line-height: normal;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+    div.list li a.name {
+        color: #fff !important;
+        text-decoration: none !important;
+    }
+
+    div.list li span.label {
+        background-color: black;
+        padding-right: 100px;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    div.list li:nth-child(odd) {
+        background-image: url(../../assets/images/222.png);
+    }
+
+    div.list li:nth-child(odd) span.label {
+        background-color: #222;
+    }
+
+div.list li span.count {
+	margin: 0px 5px 0 15px;
+}
+
+div.list li.selected {
+    background-image: url(../../assets/images/fff.png);
+}
+
+    div.list li.selected .rank {
+        color: #000;
+    }
+
+    div.list li.selected a.name {
+        color: #E92E82 !important;
+    }
+
+    div.list li.selected span.label {
+        background-color: #fff;
+    }
+
+    div.list li.selected span.count {
+        color: #222;
+    }
+
+@media only screen and (max-width : 1024px) {
+    body.ipad #tweets h1 a, body.iphone #tweets h1 a{
+        font-size: 35px;
+    }
+    body.ipad div.list, body.iphone div.list{
+        position: relative;
+    }
+    body.ipad div.list li, body.iphone div.list li{
+        background-image: none;
+        width: 100% !important;
+        overflow: hidden;
+        background-color: #000;
+    }
+    body.ipad div.list li #tweets, body.iphone div.list li #tweets{
+        overflow: visible;
+    }
+    body.ipad div.list li:nth-child(odd), body.iphone div.list li:nth-child(odd) {
+        background-image: none;
+        background-color: #222;
+    }
+    body.ipad div.list li.selected, body.iphone div.list li.selected {
+        background-color: #fff;
+    }
+    body.ipad div.list li span.label, body.iphone div.list li span.label {
+        padding-right: 0;
+        float: right;
+    }
+}
+

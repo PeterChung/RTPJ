@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sport Popularity - Twitter Tracker</title>
+        <meta charset="utf-8"/>
+        <link href="http://fonts.googleapis.com/css?family=Terminal+Dosis+Light" rel="stylesheet" type="text/css">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+		<link rel='stylesheet' type='text/css' href="assets/css/screen.css"/>
+		<link rel='stylesheet' type='text/css' href="assets/css/timeline.css"/>
+		<link rel='stylesheet' type='text/css' href="assets/css/twitter.css"/>		
+		<link rel='stylesheet' type='text/css' href="assets/css/list.css"/>
+		<link rel='stylesheet' type='text/css' href="assets/css/buzz.css"/>
+        <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+        <script type="text/javascript" src="assets/js/vendor/all-min.js"></script>
+        <script type="text/javascript" src="assets/js/eddy.js"></script>
+        <script type="text/javascript" src="assets/js/eddy.ui.js"></script>
+		<script src="assets/js/jquery-2.1.0.min.js"></script>
+		<script src="assets/js/d3.v3.min.js"></script>
+		<script src="assets/js/topojson.v1.min.js"></script>
+		<script src="assets/js/bootstrap.min.js"></script>       
+    </head>
+    <body lang="en">
+        <div id="branding">
+            <h1><a id="mtv-logo" href=""><span>Sport Popularity - Twitter Tracker</span></a></h1>
+            <div id="powered-by">
+                <span>powered by</span>
+                <a id="twitter-name" href="http://twitter.com"><span>TWITTER </span></span>TWITTER</a>
+            </div>
+        </div>
+        <div id="timeline">
+		<text class="goal" x="21" y="2" alignment-baseline="middle" fill="#E92E82" style="text-align: right;">
+		</text>
+		<text id="tweet-prompt" alignment-baseline="middle" x="9" y="5" fill="#41F7C7">Time Elapsed : 00:00:00:00</text>
+		<script>document.write(new Date().toLocaleString());</script>
+		</div>
+		 <div id="nav">
+		<li>
+		<a class="name" href="#buzz" style="font-size: 20px; color: "#E92E82";"><span>Pick Your Sport</span></a>
+		</li>
+		<li>
+		<select id="sportList" name="sportList" style="width: 250px; height: 40px;  text-align: left;" >
+                    <option value="none">Select</option>
+                    <option value="Tennis" style="color: red;">Tennis</option>
+                    <option value="Baseball" style="color: red;">Baseball</option>
+                    <option value="Basketball" style="color: blue;">Basketball</option>
+                    <option value="Soccer" style="color: red;">Soccer</option>
+                    <option value="Olympic" style="color: blue;">Olympic</option>
+                    <option value="Football" style="color: red;">Football</option>
+                </select></li>
+				<li>
+				<button value="Start" id="start" class="btn btn-primary btn-large"
+                        style="font-size: 18px; font-family: Helvetica; text-shadow: 0.025em 0.025em 0.025em rgba(0, 0, 0, 0.8); 
+						color:#000000">
+                    <span class="glyphicon glyphicon-play"></span> Start
+                </button>
+               </li>
+			   <li>
+                <button value="Stop" id="stop" class="btn btn-warning btn-large"
+                        style="font-size: 18px; font-family: Helvetica; text-shadow: 0.025em 0.025em 0.025em rgba(0, 0, 0, 0.8); 
+						color:#000000">
+                    <span class="glyphicon glyphicon-stop"></span> Stop
+                </button>
+				</li>
+				<li>
+				
+				
+		</li>
+		</ul>	
+		</div>
+		<div id="view" style="height: 469px;">
+		<div id="display"></div>
+	    <ul><li class="filler" style="display: none;">
+		<span class="label"></span>
+		</li></ul>
+		<div id="tweets" style="height: 100%;">
+		 <ul>
+		<li class="filler" style="display: none;">
+		<span class="label"><span class="label">		
+		</span></span></li></ul>
+		</div>
+		<div class="list" style="width: 460px;">
+		<ul>
+		<li class="item" style="font-size: 60px; margin-left: 0px;">
+		<span class="rank" style="font-size: 12px; margin-top: 38px; margin-left: 15px;"></span>
+		<span class="label" id="tennis" style="padding-left: 10px;">
+		<a class="name" href="">TENNIS</a>
+		<span class="count" style="font-size: 15px;">1,932</span></span></li>
+		<li class="item" style="font-size: 60px; margin-left: 12px;">
+		<span class="rank" style="font-size: 12px; margin-top: 20px; margin-left: 0px;"></span>
+		<span class="label" id="baseball" style="padding-left: 10px;">
+		<a class="name" href="">BASEBALL</a>
+		<span class="count" style="font-size: 15px;">946</span></span></li>
+		<li class="item" style="font-size: 60px; margin-left: 21px;">
+		<span class="rank" style="font-size: 12px; margin-top: 18px; margin-left: 0px;"></span>
+		<span class="label" id="basketball" style="padding-left: 10px;">
+		<a class="name" href="">BASKETBALL</a>
+		<span class="count" style="font-size: 15px;">826</span></span>
+		</li>
+		<li class="item" style="font-size: 60px; margin-left: 29px;">
+		<span class="rank" style="font-size: 12px; margin-top: 16px; margin-left: 0px;"></span>
+		<span class="label" id="olympics" style="padding-left: 10px;">
+		<a class="name" href="">OLYMPICS</a>
+		<span class="count" style="font-size: 15px;">713</span></span></li>
+		<li class="item" style="font-size: 60px; margin-left: 37px;">
+		<span class="rank" style="font-size: 12px; margin-top: 9px; margin-left: 0px;"></span>
+		<span class="label" id="soccer" style="padding-left: 10px;">
+		<a class="name" href="">SOCCER</a>
+		<span class="count" style="font-size: 15px;">341</span></span></li>
+		<li class="item" style="font-size: 60px; margin-left: 44px;">
+		<span class="rank" style="font-size: 12px; margin-top: 9px; margin-left: 0px;"></span>
+		<span class="label" id="football" style="padding-left: 10px;">
+		<a class="name" href="">FOOTBALL</a>
+		<span class="count" style="font-size: 15px;">325</span>
+		</span>
+		</li>		
+		</ul>
+		</div>
+		</div>
+<script>
+
+    if (!window.WebSocket) {
+        alert("WebSocket not supported by this browser");
+    }
+
+    var intervalms = 1000;
+    //var sumById = {};
+    //var countById = {};
+    //var populateById = {};
+    // Peter added
+    var baseballCnt = {};
+    var baseIdx =1;
+    var tennisCnt = {};
+    var tennIdx =2;
+    var soccerCnt = {};
+    var soccIdx =3;
+    var footballCnt = {};
+    var footbIdx =4;
+    var basketballCnt = {};
+    var basketIdx =5;
+    var olympicCnt = {};
+    var olymIdx =6;
+    var sportColor =[0,10, 20, 50, -10, -30, -50];
+    var sportName = ["None", "Baseball", "Tennis", "Soccer", "Football", "Basketball", "Olympic" ];
+    var maxidx ={};
+
+    var stateIdAndNameMap = {};
+    var stateIdAndCodeMap = {};
+    var stateCodeAndIdMap = {};
+    var isStarted = false;
+    var singleDraw = true;
+    var labels_for_legend = ["-50", "0", "50"];
+    var ext_color_domain = [-50, 0, 50];
+    //var color = d3.scale.linear().domain(ext_color_domain).range(["#ff0000", "#ffffff", "#00ff00"]).interpolate(d3.interpolateRgb);
+    var color = d3.scale.linear().domain(ext_color_domain).range(["#ff0000", "#ffffff", "#00ff00"]).interpolate(d3.interpolateRgb);
+    var width = 900, height = 500;
+    var div = d3.select("body").append("div");
+    var path = d3.geo.path();
+    var svg = d3.select("#chart").append("svg").attr("width", width).attr("height", height);
+    var g = svg.append("g");
+
+    g.append("defs").append("path").datum({type: "Sphere"}).attr("id", "sphere").attr("d", path);
+    g.append("use").attr("class", "stroke").attr("xlink:href", "#sphere");
+    g.append("use").attr("class", "fill").attr("xlink:href", "#sphere");
+
+    d3.tsv("assets/data/us-state-names.tsv", function (error, states) {
+        states.forEach(function (d) {
+            d.id = parseInt(d.id);
+            stateIdAndNameMap[d.id] = d.name;
+            stateIdAndCodeMap[d.id] = d.code;
+            stateCodeAndIdMap[d.code] = d.id;
+            //sumById[d.id] = 0;
+            //countById[d.id] = 0;
+            //populateById[d.id] = 0;
+            // Peter added/
+            baseballCnt[d.id] = 0;
+            tennisCnt[d.id] = 0;
+            soccerCnt[d.id] = 0;
+            footballCnt[d.id] = 0;
+            basketballCnt[d.id] = 0;
+            olympicCnt[d.id] = 0;
+        });
+    });
+
+    function pad(n, width, z) {
+        z = z || '0';
+        n = n + '';
+        return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+    }
+
+    var keyword = "none";
+    function setSport() {
+        $("#Sport").html(keyword == "none" ? "All Tweets" : "Selected Sport : " + keyword);
+    }
+
+
+    var elapsed = 0;
+    function setElapsed() {
+        var days = Math.floor(elapsed / 86400);
+        var hours = Math.floor((elapsed - (days * 86400 )) / 3600);
+        var minutes = Math.floor((elapsed - (days * 86400 ) - (hours * 3600 )) / 60);
+        var seconds = Math.floor((elapsed - (days * 86400 ) - (hours * 3600 ) - (minutes * 60)));
+
+        $("#tweet-prompt").html("Time Elapsed : " + pad(days, 2) + ":" + pad(hours, 2) + ":" + pad(minutes, 2) + ":" + pad(seconds, 2));
+    }
+
+
+    var analyzedCount = 0;
+    function setAnalyzedCount() {
+        $(".count").html("" + analyzedCount);
+    }
+
+
+    var tweetText = "<mark>none</mark>";
+    function setTweet() {
+        $("#tweet").html(tweetText);
+    }
+
+
+    $(function () {
+        $("#sportList").change(function () {
+            //stop();
+            //elapsed = 0;
+            keyword = this.value;
+            //analyzedCount = 0;
+            //tweetText = "<mark>none</mark>";
+            //Peter added
+            /*
+            for (var i in baseballCnt) {
+                if (baseballCnt.hasOwnProperty(i)) {
+                    baseballCnt[i] = 0;
+                }
+            }
+            for (var i in tennisCnt) {
+                if (tennisCnt.hasOwnProperty(i)) {
+                    tennisCnt[i] = 0;
+                }
+            }
+            for (var i in soccerCnt) {
+                if (soccerCnt.hasOwnProperty(i)) {
+                    soccerCnt[i] = 0;
+                }
+            }
+            for (var i in footballCnt) {
+                if (footballCnt.hasOwnProperty(i)) {
+                    footballCnt[i] = 0;
+                }
+            }
+            for (var i in basketballCnt) {
+                if (basketballCnt.hasOwnProperty(i)) {
+                    basketballCnt[i] = 0;
+                }
+            }
+            for (var i in olympicCnt) {
+                if (olympicCnt.hasOwnProperty(i)) {
+                    olympicCnt[i] = 0;
+                }
+            }
+            */
+            // Peter added end
+            /*
+            for (var i in sumById) {
+                if (sumById.hasOwnProperty(i)) {
+                    sumById[i] = 0;
+                }
+            }
+            for (var i in countById) {
+                if (countById.hasOwnProperty(i)) {
+                    countById[i] = 0;
+                }
+            }
+            for (var i in populateById) {
+                if (populateById.hasOwnProperty(i)) {
+                    populateById[i] = 0;
+                }
+            }
+            */
+
+            setElapsed();
+            setSport();
+            setAnalyzedCount();
+            setTweet();
+            redraw();
+        })
+    });
+
+    $(function () {
+        $('#start').on('click', function (e) {
+            start();
+        });
+        $('#stop').on('click', function (e) {
+            stop();
+        });
+        $('#stats').on('click', function (e) {
+            window.location = "stats.html";
+        });
+    });
+
+    // Peter Modified
+    function newDataReceived(newData) {
+        var jsonData = JSON.parse(newData);
+        var id = stateCodeAndIdMap[jsonData["stateCode"]];
+        //console.log(id);
+        // Peter Added
+        var sport = jsonData["keyword"];
+        var maxArray ={};
+        var currnetCnt = jsonData["count"];
+        var max = 0;
+        var maxIndex=0;
+
+        //console.log(currnetCnt);
+        // map the count value to sport
+        if(sport =="Baseball") {
+          //console.log(sport);
+          baseballCnt[id] = currnetCnt;
+        }else if (sport == "Tennis") {
+          //console.log(sport);
+          tennisCnt[id] = currnetCnt;
+        }else if (sport== "Basketball") {
+          //console.log(sport);
+          basketballCnt[id] = currnetCnt;
+        }else if (sport =="Soccer") {
+          //console.log(sport);
+          soccerCnt[id] = currnetCnt;
+        }else if (sport = "Olympic"){
+          //console.log(sport);
+          olympicCnt[id] = currnetCnt;
+        }else if (sport = "Football"){
+          //console.log(sport);
+          footballCnt[id] = currnetCnt;
+        }
+        // get max index
+
+        maxArray[baseIdx] = baseballCnt[id];
+        //console.log(maxArray[baseIdx] );
+        maxArray[tennIdx] = tennisCnt[id];
+        //console.log(maxArray[tennIdx] );
+        maxArray[basketIdx] = basketballCnt[id];
+        //console.log(maxArray[basketIdx] );
+        maxArray[soccerCnt] = soccerCnt[id];
+        //console.log(maxArray[soccerCnt] );
+        maxArray[olymIdx] = olympicCnt[id];
+        //console.log(maxArray[olymIdx] );
+        maxArray[footbIdx] = footballCnt[id] ;
+        //console.log(maxArray[footbIdx] );
+
+
+        for(i=1; i<7;i++) {
+          //console.log(maxArray[i]);
+          if(maxArray[i] == undefined){
+            maxArray[i] =0;
+          }
+          if(maxArray[i]>max) {
+            maxIndex =i;
+            max = maxArray[i];
+          }
+        }
+        maxidx[id] = maxIndex;
+        //console.log(maxIndex);
+        //console.log(id);
+        //analyzedCount++;
+        //tweetText = jsonData["tweetText"];
+        //setAnalyzedCount();
+        //setTweet();
+        // Peter Added end
+
+        if (keyword == "none") {
+            //sumById[id] = sumById[id] + jsonData["count"];
+            //countById[id] = countById[id] + 1;
+            //if (sumById[id] != 0 && countById[id] > 0) {
+            //    populateById[id] = sumById[id] / countById[id];
+            //}
+
+            analyzedCount++;
+            tweetText = jsonData["tweetText"];
+            setAnalyzedCount();
+            setTweet();
+        }
+        else if (keyword == jsonData["keyword"]) {
+            //sumById[id] = sumById[id] + jsonData["count"];
+            //countById[id] = countById[id] + 1;
+            //if (sumById[id] != 0 && countById[id] > 0) {
+            //    populateById[id] = sumById[id] / countById[id];
+            //}
+
+            analyzedCount++;
+            tweetText = jsonData["tweetText"];
+            //console.log("here!")
+            setAnalyzedCount();
+            setTweet();
+        }
+    }
+
+    var socket = {
+        start: function () {
+          //console.log("get data from java");
+            var location = "ws://localhost:9292/storm";
+            this._ws = new WebSocket(location);
+            this._ws.onmessage = this._onmessage;
+            this._ws.onclose = this._onclose;
+
+        },
+        _onmessage: function (m) {
+            if (m.data) {
+                newDataReceived(m.data);
+            }
+        },
+        _onclose: function (m) {
+            if (this._ws) {
+                this._ws.close();
+            }
+        }
+    };
+
+    function stop() {
+        socket._onclose(null);
+        isStarted = false;
+    }
+
+    function start() {
+        socket.start();
+        isStarted = true;
+    }
+
+    function redraw() {
+
+        d3.json('assets/data/us-states.json', function (error, topology) {
+            var countries = topojson.feature(topology, topology.objects.states).features;
+            svg.selectAll(".country").remove();
+            svg.selectAll("text").remove();
+            svg.selectAll("g.legend").remove();
+
+            g.selectAll(".sentimentry").data(countries).enter().append("path")
+                    .attr("class", "land-boundary").attr("d", path).style("fill", function (d) {
+                        //var value = populateById[d.id];
+                        //If the value is undefined, D3 shows the value as undefined in black color. Hence redefining value as 0.
+                        //if (value === undefined) {
+                        //    value = 0;
+                        //}
+                        //Peter added
+
+                        var maxIndex=maxidx[d.id];
+                        //If the value is undefined, D3 shows the value as undefined in black color. Hence redefining value as 0.
+                        if (maxIndex === undefined) {
+                            maxIndex = 0;
+                        }
+                        //console.log(maxIndex);
+                        var value = sportColor[maxIndex];
+
+                        //console.log( value);
+                        if (value === undefined) {
+                            value = 0;
+                        }
+                        //console.log(value);
+                        //Peter added end
+
+                        //console.log(value);
+                        return color(10);
+
+                    }).on("mouseover", function (d) {
+                        //var value = populateById[d.id];
+                        //if (value === undefined) {
+                        //    value = 0;
+                        //}
+                        //Peter added
+                        var maxIndex=maxidx[d.id];
+                        //If the value is undefined, D3 shows the value as undefined in black color. Hence redefining value as 0.
+                        if (maxIndex === undefined) {
+                            maxIndex = 0;
+                        }
+                        var value = sportName[maxIndex];
+
+                        // Peter added end
+
+                        d3.select(this).transition().duration(300)
+                                .style("opacity", 1);
+                        div.transition().duration(300).style("opacity",
+                                1);
+                        div.text(stateIdAndNameMap[d.id] + " : " + value)
+                                .style("left", (d3.event.pageX) + "px")
+                                .style("top",
+                                (d3.event.pageY - 30) + "px");
+                    }).on("mouseout", function () {
+                        d3.select(this);
+                        div.transition().duration(300).style("opacity", 0);
+                    });
+
+            g.selectAll("text")
+                    .data(countries)
+                    .enter()
+                    .append("text")
+                    .text(function (d) {
+                        return stateIdAndCodeMap[parseInt(d.id)];
+                    })
+                    .attr("x", function (d) {
+                        return path.centroid(d)[0];
+                    })
+                    .attr("y", function (d) {
+                        return path.centroid(d)[1];
+                    })
+                    .attr("text-anchor", "middle")
+                    .attr('font-size', '9pt');
+
+            g.append("path").datum(topojson.mesh(topology, topology.objects.states, function (a, b) {
+                return a !== b;
+            })).attr("class", "state-boundary").attr("d", path);
+
+            var legend = svg.selectAll("g.legend").data(ext_color_domain)
+                    .enter().append("g").attr("class", "legend");
+
+            var ls_w = 20, ls_h = 20;
+
+            legend.append("rect").attr("x", 35).attr("y", function (d, i) {
+                return height - (i * ls_h) - 3.5 * ls_h;
+            }).attr("width", ls_w).attr("height", ls_h).style("fill",
+                    function (d, i) {
+                        return color(d);
+                    }).style("opacity", 0.8);
+
+            legend.append("text").attr("x", 65).attr("y", function (d, i) {
+                return height - (i * ls_h) - ls_h - 35;
+            }).style("fill", function (d) {
+                return "white";
+            }).text(function (d, i) {
+                return labels_for_legend[i];
+            });
+        });
+    }
+
+
+    function redrawAtInterval() {
+        if (isStarted) {
+            elapsed = elapsed + intervalms / 1000;
+            setElapsed();
+            redraw();
+        }
+        else if (singleDraw) {
+            redraw();
+            singleDraw = false;
+        }
+    }
+
+
+    $(function () {
+        setInterval(redrawAtInterval, intervalms);
+    });
+
+</script>
+    </body>
+</html>

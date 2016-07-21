@@ -24,7 +24,6 @@ import org.springframework.context.ApplicationContext;
 /**
  * Topology to organize spouts and bolts for gladiator
  *
-
  * @modifiedBy - Peter Chung
  *             -- apply new topology
  *             -- apply new output format
@@ -35,13 +34,10 @@ public final class TrendTopology {
     private static final Logger LOGGER = LoggerFactory.getLogger(TrendTopology.class);
 
     public static final void main(final String[] args) throws Exception {
-
         final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
         final JmsProvider jmsProvider = new SpringJmsProvider(applicationContext, "jmsConnectionFactory", "notificationQueue");
         final TopologyBuilder topologyBuilder = new TopologyBuilder();
         final JmsBolt jmsBolt = new JmsBolt();
-
-
         jmsBolt.setJmsProvider(jmsProvider);
         jmsBolt.setJmsMessageProducer((session, input) -> {
             //final Long endTick = System.nanoTime();

@@ -178,8 +178,7 @@
 		</div>
         <div style="font-family: Helvetica; color: white; font-size: large; text-align: left; height: 100px; padding-top: 5%;">
         <table style="margin: 10px 10px 10px 50px;">
-        <!--table style="margin: auto;"-->
-            <tr><!-- Peter modified -->
+            <tr>
                 <td><u>Real-Time Tweet</u></td>
             </tr>
             <tr>
@@ -189,7 +188,6 @@
             </tr>
         </table>
     </div>
-    <!-- test -->
 
         <div id="view">
 
@@ -260,9 +258,7 @@
     var stateCodeAndIdMap = {};
     var isStarted = false;
     var singleDraw = true;
-    //var labels_for_legend = ["-50", "0", "50"];
     var ext_color_domain = [-50, 0, 50];
-    //var color = d3.scale.linear().domain(ext_color_domain).range(["#ff0000", "#ffffff", "#00ff00"]).interpolate(d3.interpolateRgb);
     var color = d3.scale.linear().domain(ext_color_domain).range(["#ff0000", "#ffffff", "#00ff00"]).interpolate(d3.interpolateRgb);
     var width = 900, height = 500;
     var div = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
@@ -278,10 +274,6 @@
             stateIdAndNameMap[d.id] = d.name;
             stateIdAndCodeMap[d.id] = d.code;
             stateCodeAndIdMap[d.code] = d.id;
-            //sumById[d.id] = 0;
-            //countById[d.id] = 0;
-            //populateById[d.id] = 0;
-            // Peter added/
             baseballCnt[d.id] = 0;
             tennisCnt[d.id] = 0;
             soccerCnt[d.id] = 0;
@@ -295,10 +287,6 @@
         n = n + '';
         return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
     }
-    //var keyword = "none";
-    //function setSport() {
-    //    $("#Sport").html(keyword == "none" ? "All Tweets" : "Selected Sport : " + keyword);
-    //}
 
     var elapsed = 0;
     function setElapsed() {
@@ -326,66 +314,8 @@
     var keyword = "none";
     $(function () {
         $("#sportList").change(function () {
-            //stop();
-            //elapsed = 0;
+
             keyword = this.value;
-            //analyzedCount = 0;
-            //tweetText = "<mark>none</mark>";
-            //Peter added
-            /*
-            for (var i in baseballCnt) {
-                if (baseballCnt.hasOwnProperty(i)) {
-                    baseballCnt[i] = 0;
-                }
-            }
-            for (var i in tennisCnt) {
-                if (tennisCnt.hasOwnProperty(i)) {
-                    tennisCnt[i] = 0;
-                }
-            }
-            for (var i in soccerCnt) {
-                if (soccerCnt.hasOwnProperty(i)) {
-                    soccerCnt[i] = 0;
-                }
-            }
-            for (var i in footballCnt) {
-                if (footballCnt.hasOwnProperty(i)) {
-                    footballCnt[i] = 0;
-                }
-            }
-            for (var i in basketballCnt) {
-                if (basketballCnt.hasOwnProperty(i)) {
-                    basketballCnt[i] = 0;
-                }
-            }
-            for (var i in olympicCnt) {
-                if (olympicCnt.hasOwnProperty(i)) {
-                    olympicCnt[i] = 0;
-                }
-            }
-            */
-            // Peter added end
-            /*
-            for (var i in sumById) {
-                if (sumById.hasOwnProperty(i)) {
-                    sumById[i] = 0;
-                }
-            }
-            for (var i in countById) {
-                if (countById.hasOwnProperty(i)) {
-                    countById[i] = 0;
-                }
-            }
-            for (var i in populateById) {
-                if (populateById.hasOwnProperty(i)) {
-                    populateById[i] = 0;
-                }
-            }
-            */
-            //setElapsed();
-            //setSport();
-            //setAnalyzedCount();
-            //setTweet();
             redraw();
         })
     });
@@ -401,12 +331,10 @@
         });
     });
 
-    // Peter Modified
     function newDataReceived(newData) {
         var jsonData = JSON.parse(newData);
         var id = stateCodeAndIdMap[jsonData["stateCode"]];
         //console.log(id);
-        // Peter Added
         var sport = jsonData["keyword"];
         var maxArray ={};
         var currnetCnt = jsonData["count"];
@@ -415,45 +343,33 @@
         //console.log(sport);
         // map the count value to sport
         if(sport =="Baseball") {
-          //console.log(sport);
           baseballCnt[id] = currnetCnt;
           baseballTWCnt += 1;
         }else if (sport == "Tennis") {
-          //console.log(sport);
           tennisCnt[id] = currnetCnt;
           tennisTWCnt +=1;
         }else if (sport== "Basketball") {
-          //console.log(sport);
           basketballCnt[id] = currnetCnt;
           basketballTWCnt +=1;
         }else if (sport =="Soccer") {
-          //console.log(sport);
           soccerCnt[id] = currnetCnt;
           soccerTWCnt +=1;
         }else if (sport == "Olympic"){
-          //console.log(sport);
           olympicCnt[id] = currnetCnt;
           olympicTWCnt +=1;
         }else if (sport == "Football"){
-          //console.log(sport);
           footballCnt[id] = currnetCnt;
           footballTWCnt +=1;
         }
         // get max index
         maxArray[baseIdx] = baseballCnt[id];
-        //console.log(maxArray[baseIdx] );
         maxArray[tennIdx] = tennisCnt[id];
-        //console.log(maxArray[tennIdx] );
         maxArray[basketIdx] = basketballCnt[id];
-        //console.log(maxArray[basketIdx] );
         maxArray[soccerCnt] = soccerCnt[id];
-        //console.log(maxArray[soccerCnt] );
         maxArray[olymIdx] = olympicCnt[id];
-        //console.log(maxArray[olymIdx] );
         maxArray[footbIdx] = footballCnt[id] ;
-        //console.log(maxArray[footbIdx] );
+
         for(i=1; i<7;i++) {
-          //console.log(maxArray[i]);
           if(maxArray[i] == undefined){
             maxArray[i] =0;
           }
@@ -463,46 +379,23 @@
           }
         }
         maxidx[id] = maxIndex;
-		 //$("#count1").html(baseballTWCnt);
-		 //$("#count2").html(tennisTWCnt);
-		 //$("#count3").html(basketballTWCnt);
-		 //$("#count4").html(soccerTWCnt);
-		 //$("#count5").html(olympicTWCnt);
-		 //$("#count6").html(footballTWCnt);
         //console.log(maxIndex);
-        //console.log(id);
         analyzedCount++;
-        //tweetText = jsonData["tweetText"];
         setAnalyzedCount();
-        //setTweet();
-        // Peter Added end
+
         if (keyword == "none") {
-            //sumById[id] = sumById[id] + jsonData["count"];
-            //countById[id] = countById[id] + 1;
-            //if (sumById[id] != 0 && countById[id] > 0) {
-            //    populateById[id] = sumById[id] / countById[id];
-            //}
-            //analyzedCount++;
+
             tweetText = jsonData["tweetText"];
-            //setAnalyzedCount();
             setTweet();
         }
         else if (keyword == jsonData["keyword"]) {
-            //sumById[id] = sumById[id] + jsonData["count"];
-            //countById[id] = countById[id] + 1;
-            //if (sumById[id] != 0 && countById[id] > 0) {
-            //    populateById[id] = sumById[id] / countById[id];
-            //}
-            //analyzedCount++;
+
             tweetText = jsonData["tweetText"];
-            //console.log("here!")
-            //setAnalyzedCount();
             setTweet();
         }
     }
     var socket = {
         start: function () {
-          //console.log("get data from java");
             var location = "ws://localhost:9292/storm";
             this._ws = new WebSocket(location);
             this._ws.onmessage = this._onmessage;
@@ -535,14 +428,7 @@
             //svg.selectAll("g.legend").remove();
             g.selectAll(".sentimentry").data(countries).enter().append("path")
                     .attr("class", "land-boundary").attr("d", path).style("fill", function (d) {
-                        //var value = populateById[d.id];
-                        //If the value is undefined, D3 shows the value as undefined in black color. Hence redefining value as 0.
-                        //if (value === undefined) {
-                        //    value = 0;
-                        //}
-                        //Peter added
                         var maxIndex=maxidx[d.id];
-                        //If the value is undefined, D3 shows the value as undefined in black color. Hence redefining value as 0.
                         if (maxIndex === undefined) {
                             maxIndex = 0;
                         }
@@ -552,23 +438,14 @@
                         if (value === undefined) {
                             value = 0;
                         }
-                        //console.log(value);
-                        //Peter added end
-                        //console.log(value);
                         return color(value);
                     }).on("mouseover", function (d) {
-                        //var value = populateById[d.id];
-                        //if (value === undefined) {
-                        //    value = 0;
-                        //}
-                        //Peter added
+
                         var maxIndex=maxidx[d.id];
-                        //If the value is undefined, D3 shows the value as undefined in black color. Hence redefining value as 0.
                         if (maxIndex === undefined) {
                             maxIndex = 0;
                         }
                         var value = sportName[maxIndex];
-                        // Peter added end
                         d3.select(this).transition().duration(300)
                                 .style("opacity", 1);
                         div.transition().duration(300).style("opacity",
@@ -599,22 +476,7 @@
             g.append("path").datum(topojson.mesh(topology, topology.objects.states, function (a, b) {
                 return a !== b;
             })).attr("class", "state-boundary").attr("d", path);
-            //var legend = svg.selectAll("g.legend").data(ext_color_domain)
-            //        .enter().append("g").attr("class", "legend");
-            //var ls_w = 20, ls_h = 20;
-            //legend.append("rect").attr("x", 35).attr("y", function (d, i) {
-            //    return height - (i * ls_h) - 3.5 * ls_h;
-            //}).attr("width", ls_w).attr("height", ls_h).style("fill",
-            //        function (d, i) {
-            //            return color(d);
-            //        }).style("opacity", 0.8);
-            //legend.append("text").attr("x", 65).attr("y", function (d, i) {
-            //    return height - (i * ls_h) - ls_h - 35;
-            //}).style("fill", function (d) {
-            //    return "white";
-            //}).text(function (d, i) {
-            //    return labels_for_legend[i];
-            //});
+
         });
     }
     function redrawAtInterval() {

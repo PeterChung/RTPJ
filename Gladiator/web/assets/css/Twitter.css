@@ -1,0 +1,106 @@
+
+.tweet {
+    margin: 0;
+    padding: 4px 8px 4px 10px;
+    color: #222;
+    position: relative;
+    background-color: #fff;
+    clear: both;
+}
+
+    .tweet:nth-child(even) {
+        background-color: #eee;
+    }
+
+    .tweet.has-icon {
+        padding-left: 65px;
+    }
+
+    .tweet .icon {
+        position: absolute;
+        left: 8px;
+        top: 8px;
+        width: 48px;
+        height: 48px;
+    }
+
+    .tweet .author,
+    .tweet p.text {
+        margin: 0 0 2px 0;
+    }
+
+    .tweet .author {
+        position: relative;
+    }
+
+    .tweet .author .twitter-follow-button {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+
+    .tweet a {
+        text-decoration: none;
+    }
+    .tweet a:hover {
+        text-decoration: underline;
+    }
+
+    .tweet .links {
+        font-size: 13px;
+    }
+
+    .tweet .links a {
+        color: #666;
+        text-decoration: none;
+        font-weight: 200;
+        margin-right: 5px;
+    }
+
+    .tweet .links a:hover {
+        color: #000;
+    }
+
+    .tweet .links .icon {
+        display: inline-block;
+        position: relative;
+        left: 0;
+        top: 3px;
+        width: 16px;
+        height: 16px;
+        line-height: 0;
+        margin-right: 1px;
+    }
+
+    .tweet a.perm .icon {
+        background-image: url(https://si0.twimg.com/images/dev/cms/intents/bird/bird_gray/bird_16_gray.png);
+    }
+    .tweet a.perm:hover .icon {
+        background-image: url(https://si0.twimg.com/images/dev/cms/intents/bird/bird_blue/bird_16_blue.png);
+    }
+
+    .tweet a.reply .icon,
+    .tweet a.retweet .icon,
+    .tweet a.fave .icon,
+    .tweet a.faved .icon {
+        background-image: url(https://si0.twimg.com/images/dev/cms/intents/icons/sprites/everything-spritev2.png);
+        background-repeat: no-repeat;
+    }
+    /* 2x reply: default, hover */
+    .tweet a.reply .icon { background-position-x: 0; }
+    .tweet a.reply:hover .icon { background-position-x: -16px; }
+    /* 3x reply: default, hover, faved */
+    .tweet a.fave .icon { background-position-x: -32px; }
+    .tweet a.fave:hover .icon { background-position-x: -48px; }
+    .tweet a.faved .icon { background-position-x: -64px !important; }
+    /* 3x retweet: default, hover, retweeted */
+    .tweet a.retweet .icon { background-position-x: -80px; }
+    .tweet a.retweet:hover .icon { background-position-x: -96px; }
+    .tweet a.retweeted .icon { background-position-x: -112px !important; }
+
+@media only screen and (min-width: 481px) and (max-width : 1024px) {
+    .tweet{
+        font-size: 130%;
+    }
+}
+

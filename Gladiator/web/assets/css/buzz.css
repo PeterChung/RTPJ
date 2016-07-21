@@ -1,0 +1,114 @@
+
+body#buzz {
+
+}
+
+body.deep #nav li.buzz{
+    float: right;
+}
+
+body#buzz #view{
+    overflow: hidden;
+}
+
+#tweets{
+    color: black;
+    background-color: #fff;
+    position: absolute;
+    top: 0;
+    right: -350px;
+    display: none;
+    width: 350px;
+    height: 768px;
+    font-size: 13px;
+    line-height: normal;
+    padding: 0;
+    overflow-x: hide;
+    overflow-y: show;
+}
+
+#tweets h1{
+    font-size: 48px;
+    line-height: 1em;
+    font-weight: 100;
+    text-transform: uppercase;
+    color: #E92E82;
+    margin: 6px 0 0 10px;
+}
+#tweets h2{
+    font-weight: 100;
+    margin: 0 0 10px 10px;
+}
+
+#tweets h2,
+#tweets a.back {
+    font-size: 20px;
+    line-height: 24px;
+}
+
+#tweets .hashtag {
+    padding-left: 28px;
+    background-size: contain;
+    -moz-background-size: contain;
+    -webkit-background-size: contain;
+    background-image: url(https://si0.twimg.com/images/dev/cms/intents/bird/bird_gray/bird_32_gray.png);
+    background-position: left center;
+    background-repeat: no-repeat;
+}
+
+#tweets a.back {
+    text-transform: uppercase;
+    padding: 5px 0 5px 15px;
+}
+
+@media only screen and (min-width : 1025px) {
+}
+
+/* Bigger than mobile (tablet, desktop) */
+@media only screen and (min-width : 701px) {
+}
+
+/* Tablet only (and smaller desktop) */
+@media only screen and (max-width : 1024px) {
+    body#buzz.ipad, body#buzz.ipad #view, body#buzz.iphone, body#buzz.iphone #view {
+        overflow: visible;
+    }
+    body.deep.iphone #view svg{
+        min-height: 375px;
+    }
+    body.deep.ipad #nav li.buzz, body.deep.iphone #nav li.buzz{
+        margin-right: 4px;
+        margin-left: -3px;
+    }
+    body.ipad #tweets, body.iphone #tweets{
+        width: 100%;
+        border-top: 1px dashed #333;
+    }
+    body.ipad #tweets h1 a{
+        font-size: 35px;
+        float: left;
+    }
+    body.ipad #tweets a.back {
+        float: right;
+        padding: 0 10px 0 0;
+        margin-top: 20px;
+    }
+}
+
+@media only screen and (min-width: 481px) and (max-width : 1024px) {
+    body.iphone #tweets h1 a{
+        font-size: 60px;
+        float: left;
+    }
+    body.iphone #tweets a.back {
+        float: right;
+    }
+    body.deep.iphone #view svg{
+        min-height: 600px;
+    }
+}
+
+/* Mobile and tiny screens */
+@media only screen and (max-width: 700px) {
+
+}
